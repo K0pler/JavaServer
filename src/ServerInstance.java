@@ -23,8 +23,6 @@ public class ServerInstance extends Thread {
 			
 			BufferedReader inputReader = new BufferedReader(new InputStreamReader(inputStream));
 			
-			System.out.println("Client wrote: " + inputReader.readLine());
-			
 			OutputStream outputStream = socket.getOutputStream();
 			
 			PrintWriter outputWriter = new PrintWriter(new OutputStreamWriter(outputStream));
