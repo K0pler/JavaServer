@@ -1,3 +1,4 @@
+package webserver;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +11,6 @@ import java.net.*;
 public class ServerInstance extends Thread {
 	
 	Socket socket;
-	boolean terminate = false;
 	
 	public ServerInstance(Socket s) {
 		socket = s;
@@ -23,33 +23,37 @@ public class ServerInstance extends Thread {
 			
 			BufferedReader inputReader = new BufferedReader(new InputStreamReader(inputStream));
 			
-			System.out.println("Client wrote: " + inputReader.readLine());
-			
 			OutputStream outputStream = socket.getOutputStream();
 			
 			PrintWriter outputWriter = new PrintWriter(new OutputStreamWriter(outputStream));
 			
-			while (! terminate) {
-				process ( inputReader, outputWriter);
+			for (;;) {
+				String line = inputReader.readLine();
+				System.out.println(line);
+				if (line.equals("")) {
+					break;
+				}
 			}
 			
-			socket.close(); // Graceful termination
+			outputWriter.println("HTTP/1.0 200 OK");
+			  outputWriter.println("Content-Type: text/html");
+			  outputWriter.println(); // The empty line
+			  outputWriter.println("<HTML>");
+			  outputWriter.println("<HEAD>");
+			  outputWriter.println("<link rel='shortcut icon' href='about:blank' />");
+			  outputWriter.println("</HEAD>");
+			  outputWriter.println("<BODY>");
+			  outputWriter.println("Hello from ");
+			  outputWriter.println("My Very Own ");
+			  outputWriter.println("Web Server");
+			  outputWriter.println("</BODY>");
+			  outputWriter.println("</HTML>");
+			  outputWriter.close();
+			  inputStream.close();
+			  socket.close();
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
-	void process(BufferedReader input, PrintWriter output) throws IOException {
-		String line = input.readLine();
-		//echo the line back
-		output.println("Echo: " + line);
-		output.flush();
-		
-		if (line.equalsIgnoreCase("exit")) {
-			terminate = true;
-			System.out.println("Connection terminated");
-		}
-	}
-
 }
