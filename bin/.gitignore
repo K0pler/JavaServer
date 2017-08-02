@@ -1,2 +1,8 @@
 /Client.class
 /Server.class
+<<<<<<< HEAD
+=======
+/ServerInstance.class
+/webserver/
+/client/
+>>>>>>> refs/heads/webserver
