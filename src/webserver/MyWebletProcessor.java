@@ -19,11 +19,20 @@ public class MyWebletProcessor {
 			
 			myWeblet.doRequst(null, null, null, out);
 			
-			outputWriter.println("HTTP/1.0 200 OK");
+			if (myWeblet.redirect != null) {
+				outputWriter.println("HTTP/1.0 302 Found");
+			} else {
+				outputWriter.println("HTTP/1.0 " + myWeblet.errorCode + " " + myWeblet.description);
+			}
+			
 			if (myWeblet.contentType != null) {
 				outputWriter.println("Content-Type: " + myWeblet.contentType);
 			} else {
 				outputWriter.println("Content-Type: text/html");
+			}
+			
+			if (myWeblet.redirect != null) {
+			outputWriter.println("Location: " + myWeblet.redirect);
 			}
 			outputWriter.println();
 			
