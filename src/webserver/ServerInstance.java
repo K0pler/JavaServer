@@ -84,6 +84,23 @@ public class ServerInstance extends Thread {
         	  resource = resource.substring(0, qIndex);
           }
           resource = URLDecoder.decode(resource, "UTF-8");
+          
+          for (int i = 0; i < MyWebletConfigs.myWebletConfigs.length; i++) {
+        	  String url = MyWebletConfigs.myWebletConfigs[i].url;
+        	  Class cls = MyWebletConfigs.myWebletConfigs[i].cls;
+        	  
+        	  //Compare url against resource name
+        	  if (url.equalsIgnoreCase(resource)) {
+        		  MyWebletProcessor mwp = new MyWebletProcessor();
+        		  
+        		  mwp.processMyWeblet(cls, outputWriter);
+        		  
+        		  inputStream.close();
+        		  socket.close();
+        		  
+        		  return;
+        	  }
+          }
 
           File dir = new File("D:\\Programmering\\MyOwnServerFiles" );
           File file  = new File( dir, resource );
