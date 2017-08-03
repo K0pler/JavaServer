@@ -1,12 +1,11 @@
 package webserver;
 
 import java.io.*;
-import java.util.*;
-
 import java.io.PrintWriter;
 
 public class MyWebletProcessor {
 
+	@SuppressWarnings("rawtypes")
 	public void processMyWeblet(Class cls, PrintWriter outputWriter) {
 		// TODO Auto-generated method stub
 		try {

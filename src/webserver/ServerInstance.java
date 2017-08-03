@@ -45,6 +45,7 @@ public class ServerInstance extends Thread {
         return "text/plain"; // This will just show the file in plain-text
     }
 	
+	@SuppressWarnings("resource")
 	public void run()
     {
         try {
@@ -87,7 +88,8 @@ public class ServerInstance extends Thread {
           
           for (int i = 0; i < MyWebletConfigs.myWebletConfigs.length; i++) {
         	  String url = MyWebletConfigs.myWebletConfigs[i].url;
-        	  Class cls = MyWebletConfigs.myWebletConfigs[i].cls;
+        	  @SuppressWarnings("rawtypes")
+			Class cls = MyWebletConfigs.myWebletConfigs[i].cls;
         	  
         	  //Compare url against resource name
         	  if (url.equalsIgnoreCase(resource)) {
