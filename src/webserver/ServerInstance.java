@@ -95,7 +95,7 @@ public class ServerInstance extends Thread {
         	  if (url.equalsIgnoreCase(resource)) {
         		  MyWebletProcessor mwp = new MyWebletProcessor();
         		  
-        		  mwp.processMyWeblet(cls, outputWriter);
+        		  mwp.processMyWeblet(cls, outputWriter, resource, queryString);
         		  
         		  inputStream.close();
         		  socket.close();

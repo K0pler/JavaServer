@@ -18,5 +18,6 @@ public class MyWebletConfigs {
 			//e.g.
 			
 			new MyWebletConfigs ("/HelloWorld", apps.HelloWorldMyWeblet.class),
+			new MyWebletConfigs ("/ProcessName", apps.NameProcessor.class),
 	};
 }

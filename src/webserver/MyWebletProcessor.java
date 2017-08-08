@@ -1,12 +1,13 @@
 package webserver;
 
 import java.io.*;
-import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.util.*;
 
 public class MyWebletProcessor {
 
 	@SuppressWarnings("rawtypes")
-	public void processMyWeblet(Class cls, PrintWriter outputWriter) {
+	public void processMyWeblet(Class cls, PrintWriter outputWriter, String resource, String queryString) {
 		// TODO Auto-generated method stub
 		try {
 			Object instance = cls.newInstance();
@@ -17,7 +18,9 @@ public class MyWebletProcessor {
 			
 			PrintWriter out = new PrintWriter(byteArray);
 			
-			myWeblet.doRequst(null, null, null, out);
+			
+			
+			myWeblet.doRequst(resource, queryString, parseQueryString(queryString), out);
 			
 			if (myWeblet.redirect != null) {
 				outputWriter.println("HTTP/1.0 302 Found");
@@ -48,6 +51,28 @@ public class MyWebletProcessor {
 		} catch (Exception ex) {
 			
 		}
+	}
+	
+	HashMap<String, String> parseQueryString(String queryString) throws UnsupportedEncodingException {
+	HashMap<String, String> parameters = new HashMap<String, String>();
+	
+	if (queryString == null) {
+		return parameters;
+	}
+	
+	StringTokenizer qtokens = new StringTokenizer(queryString, "&");
+	
+	while (qtokens.hasMoreTokens()) {
+		String[] ptokens = qtokens.nextToken().split("=");
+		
+		if (ptokens.length == 2) {
+			
+			String parameterName = URLDecoder.decode(ptokens[0], "utf-8");
+			String parameterValue = URLDecoder.decode(ptokens[1], "utf-8");
+			parameters.put(parameterName, parameterValue);
+		}
+	}
+	return parameters;
 	}
 
 }
