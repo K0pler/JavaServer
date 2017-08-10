@@ -104,7 +104,7 @@ public class ServerInstance extends Thread {
         	  }
           }
 
-          File dir = new File("D:\\Programmering\\MyOwnServerFiles" );
+          File dir = new File(System.getProperty("user.dir") + "/webapps");
           File file  = new File( dir, resource );
           if ( file.exists() && file.isDirectory())
             file = new File( file, "index.html");
