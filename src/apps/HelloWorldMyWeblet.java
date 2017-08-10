@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class HelloWorldMyWeblet extends webserver.MyWeblet {
 
 	@Override
-	public void doRequst(String resource, String queryString, HashMap<String, String> parameters, PrintWriter out) {
+	public void doRequest(String resource, String queryString, HashMap<String, String> parameters, PrintWriter out) {
 		// TODO Auto-generated method stub
 		setContentType("text/plain");
 		out.println("<HTML>");

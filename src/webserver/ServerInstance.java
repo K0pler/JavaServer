@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.*;
+import java.util.HashMap;
 
 public class ServerInstance extends Thread {
 	
@@ -64,6 +65,12 @@ public class ServerInstance extends Thread {
           // Get the request line separately from the rest of the headers
           String requestLine = inputReader.readLine();
           System.out.println("Request line = " + requestLine);
+          
+          @SuppressWarnings("unused")
+		HashMap<String,String> requestCookies = 
+                  new HashMap<String,String>();
+          
+          String cookieHeaderLine = null;
 
           // Now read until the empty line, discard the header lines
 
@@ -73,6 +80,9 @@ public class ServerInstance extends Thread {
             if ( line.equals( "" ))
                 break;
             // System.out.println(line);
+            if (line.startsWith("Cookie:")) {
+            	cookieHeaderLine = line;
+            }
           }
 
           String[] tokens = requestLine.split(" ");
@@ -95,7 +105,7 @@ public class ServerInstance extends Thread {
         	  if (url.equalsIgnoreCase(resource)) {
         		  MyWebletProcessor mwp = new MyWebletProcessor();
         		  
-        		  mwp.processMyWeblet(cls, outputWriter, resource, queryString);
+        		  mwp.processMyWeblet(cls, outputWriter, resource, queryString, cookieHeaderLine);
         		  
         		  inputStream.close();
         		  socket.close();
