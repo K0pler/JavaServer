@@ -6,7 +6,21 @@ public class Server {
 
 	public static void main(String[] args) throws IOException {
 		
-		ServerSocket server = new ServerSocket(80);
+		@SuppressWarnings("resource")
+		ServerSocket server = new ServerSocket(1024);
+		
+		for (String className: MyWebletConfigs.serverStartupClasses) {
+			
+			try {
+				@SuppressWarnings("rawtypes")
+				Class cls = Class.forName(className);
+				ServerStartup serverStartupObject = (ServerStartup) cls.newInstance();
+				// Call the startup method
+				serverStartupObject.onServerStartup();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 		
 		for (;;) {
 			System.out.println("Waiting for client connection");
@@ -14,6 +28,8 @@ public class Server {
             System.out.println("Have client connection, launching thread");
 			new ServerInstance(socket).start();
 		}
+		
+		
 
 	}
 
