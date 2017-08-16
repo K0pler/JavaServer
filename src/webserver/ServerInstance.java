@@ -118,6 +118,28 @@ public class ServerInstance extends Thread {
           File file  = new File( dir, resource );
           if ( file.exists() && file.isDirectory())
             file = new File( file, "index.html");
+          if (file.exists() && file.getAbsolutePath().endsWith(".ksp")){
+        	  @SuppressWarnings("rawtypes")
+			Class cls =
+        	          new MspProcessor().getMspClass( file );
+
+        	    MyWebletProcessor mwp =
+        	          new MyWebletProcessor();
+
+        	    mwp.processMyWeblet( cls,
+        	                         outputWriter,
+        	                         resource,
+        	                         queryString,
+        	                         cookieHeaderLine );
+
+        	    // Don't do the rest of the processing,
+        	    // processMyWeblet has done it all
+
+        	    inputStream.close();
+        	    socket.close();
+
+        	    return;
+          }
 
           if ( ! file.exists())
           {
