@@ -1,0 +1,36 @@
+<HTML>
+<BODY>
+<%!
+    // A method to return cube of a number
+
+    int cube( int n )
+    {
+        return n * n * n;
+    }
+
+%>
+<%
+if ( parameters.get( "number" ) != null )
+{
+    try {
+        int n = Integer.parseInt(
+                   parameters.get( "number" ));
+
+        out.print("The cube of " + n + " = " +
+                    cube( n ));
+    } catch (NumberFormatException nex)
+    {
+        out.print("Please enter a valid number." +
+           " You entered: " +
+           parameters.get( "number" ));
+    }
+    out.println("<HR>");
+}
+%>
+<FORM METHOD=GET ACTION="cube.ksp">
+Enter number: <INPUT TYPE=TEXT SIZE=4 NAME="number">
+<P>
+<INPUT TYPE=SUBMIT>
+</FORM>
+</BODY>
+</HTML>

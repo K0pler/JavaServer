@@ -1,0 +1,8 @@
+<%
+    java.util.Date date = new java.util.Date();
+%>
+<HTML>
+<BODY>
+<P> hesky billoba The time is now <%= date %>
+</BODY>
+</HTML>
