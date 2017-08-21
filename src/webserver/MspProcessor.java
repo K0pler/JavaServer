@@ -151,7 +151,6 @@ public class MspProcessor
 
     void compileJavaFile( File javaFile ) throws IOException
     {
-    	System.out.println("hej");
         Process p = Runtime.getRuntime().exec( new String[] {
           "F:\\Java\\jdk1.8.0_121\\bin\\javac.exe",
           "-classpath",
@@ -161,7 +160,6 @@ public class MspProcessor
           javaFile.getAbsolutePath()
          }
         );
-        System.out.println("hej");
         InputStream in = p.getErrorStream();
         int c;
         while (( c = in.read()) >= 0 )
